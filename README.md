@@ -1,2 +1,2 @@
 # Projet-ProgSysteme-L3
-Mini linux shell
+Project imported from https://services.emi.u-bordeaux.fr/projet/viewvc/prs/ accomplished in third year of bachelor. We was three to realize this project. The objective was to conceive a mini Linux shell with basic features (auto-completion, main commands, historic, ...).
