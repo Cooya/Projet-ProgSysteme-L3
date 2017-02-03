@@ -1,0 +1,485 @@
+État 23 conflits: 5 décalage/réduction
+État 24 conflits: 5 décalage/réduction
+État 25 conflits: 5 décalage/réduction
+État 26 conflits: 5 décalage/réduction
+
+
+Grammaire
+
+    0 $accept: lignecommande $end
+
+    1 lignecommande: expression '\n'
+    2              | error '\n'
+
+    3 expression: %empty
+    4           | commande
+    5           | expression ';' expression
+    6           | expression ET expression
+    7           | expression OU expression
+    8           | expression '|' expression
+    9           | expression IN fichier
+   10           | expression OUT fichier
+   11           | expression ERR fichier
+   12           | expression ERR_OUT fichier
+   13           | expression OUT_APPEND fichier
+   14           | expression '&'
+   15           | '(' expression ')'
+
+   16 fichier: IDENTIFICATEUR
+
+   17 commande: IDENTIFICATEUR
+   18         | commande IDENTIFICATEUR
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+$end (0) 0
+'\n' (10) 1 2
+'&' (38) 14
+'(' (40) 15
+')' (41) 15
+';' (59) 5
+'|' (124) 8
+error (256) 2
+IDENTIFICATEUR (258) 16 17 18
+ET (259) 6
+OU (260) 7
+IN (261) 9
+OUT (262) 10
+OUT_APPEND (263) 13
+ERR (264) 11
+ERR_OUT (265) 12
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (17)
+    à gauche: 0
+lignecommande (18)
+    à gauche: 1 2, à droite: 0
+expression (19)
+    à gauche: 3 4 5 6 7 8 9 10 11 12 13 14 15, à droite: 1 5 6 7
+    8 9 10 11 12 13 14 15
+fichier (20)
+    à gauche: 16, à droite: 9 10 11 12 13
+commande (21)
+    à gauche: 17 18, à droite: 4 18
+
+
+État 0
+
+    0 $accept: . lignecommande $end
+
+    error           décalage et aller à l'état 1
+    IDENTIFICATEUR  décalage et aller à l'état 2
+    '('             décalage et aller à l'état 3
+
+    '&'         réduction par utilisation de la règle 3 (expression)
+    ';'         réduction par utilisation de la règle 3 (expression)
+    ET          réduction par utilisation de la règle 3 (expression)
+    OU          réduction par utilisation de la règle 3 (expression)
+    '|'         réduction par utilisation de la règle 3 (expression)
+    IN          réduction par utilisation de la règle 3 (expression)
+    OUT         réduction par utilisation de la règle 3 (expression)
+    OUT_APPEND  réduction par utilisation de la règle 3 (expression)
+    ERR         réduction par utilisation de la règle 3 (expression)
+    ERR_OUT     réduction par utilisation de la règle 3 (expression)
+    '\n'        réduction par utilisation de la règle 3 (expression)
+
+    lignecommande  aller à l'état 4
+    expression     aller à l'état 5
+    commande       aller à l'état 6
+
+
+État 1
+
+    2 lignecommande: error . '\n'
+
+    '\n'  décalage et aller à l'état 7
+
+
+État 2
+
+   17 commande: IDENTIFICATEUR .
+
+    $défaut  réduction par utilisation de la règle 17 (commande)
+
+
+État 3
+
+   15 expression: '(' . expression ')'
+
+    IDENTIFICATEUR  décalage et aller à l'état 2
+    '('             décalage et aller à l'état 3
+
+    $défaut  réduction par utilisation de la règle 3 (expression)
+
+    expression  aller à l'état 8
+    commande    aller à l'état 6
+
+
+État 4
+
+    0 $accept: lignecommande . $end
+
+    $end  décalage et aller à l'état 9
+
+
+État 5
+
+    1 lignecommande: expression . '\n'
+    5 expression: expression . ';' expression
+    6           | expression . ET expression
+    7           | expression . OU expression
+    8           | expression . '|' expression
+    9           | expression . IN fichier
+   10           | expression . OUT fichier
+   11           | expression . ERR fichier
+   12           | expression . ERR_OUT fichier
+   13           | expression . OUT_APPEND fichier
+   14           | expression . '&'
+
+    '&'         décalage et aller à l'état 10
+    ';'         décalage et aller à l'état 11
+    ET          décalage et aller à l'état 12
+    OU          décalage et aller à l'état 13
+    '|'         décalage et aller à l'état 14
+    IN          décalage et aller à l'état 15
+    OUT         décalage et aller à l'état 16
+    OUT_APPEND  décalage et aller à l'état 17
+    ERR         décalage et aller à l'état 18
+    ERR_OUT     décalage et aller à l'état 19
+    '\n'        décalage et aller à l'état 20
+
+
+État 6
+
+    4 expression: commande .
+   18 commande: commande . IDENTIFICATEUR
+
+    IDENTIFICATEUR  décalage et aller à l'état 21
+
+    $défaut  réduction par utilisation de la règle 4 (expression)
+
+
+État 7
+
+    2 lignecommande: error '\n' .
+
+    $défaut  réduction par utilisation de la règle 2 (lignecommande)
+
+
+État 8
+
+    5 expression: expression . ';' expression
+    6           | expression . ET expression
+    7           | expression . OU expression
+    8           | expression . '|' expression
+    9           | expression . IN fichier
+   10           | expression . OUT fichier
+   11           | expression . ERR fichier
+   12           | expression . ERR_OUT fichier
+   13           | expression . OUT_APPEND fichier
+   14           | expression . '&'
+   15           | '(' expression . ')'
+
+    '&'         décalage et aller à l'état 10
+    ';'         décalage et aller à l'état 11
+    ET          décalage et aller à l'état 12
+    OU          décalage et aller à l'état 13
+    '|'         décalage et aller à l'état 14
+    IN          décalage et aller à l'état 15
+    OUT         décalage et aller à l'état 16
+    OUT_APPEND  décalage et aller à l'état 17
+    ERR         décalage et aller à l'état 18
+    ERR_OUT     décalage et aller à l'état 19
+    ')'         décalage et aller à l'état 22
+
+
+État 9
+
+    0 $accept: lignecommande $end .
+
+    $défaut  accepter
+
+
+État 10
+
+   14 expression: expression '&' .
+
+    $défaut  réduction par utilisation de la règle 14 (expression)
+
+
+État 11
+
+    5 expression: expression ';' . expression
+
+    IDENTIFICATEUR  décalage et aller à l'état 2
+    '('             décalage et aller à l'état 3
+
+    $défaut  réduction par utilisation de la règle 3 (expression)
+
+    expression  aller à l'état 23
+    commande    aller à l'état 6
+
+
+État 12
+
+    6 expression: expression ET . expression
+
+    IDENTIFICATEUR  décalage et aller à l'état 2
+    '('             décalage et aller à l'état 3
+
+    $défaut  réduction par utilisation de la règle 3 (expression)
+
+    expression  aller à l'état 24
+    commande    aller à l'état 6
+
+
+État 13
+
+    7 expression: expression OU . expression
+
+    IDENTIFICATEUR  décalage et aller à l'état 2
+    '('             décalage et aller à l'état 3
+
+    $défaut  réduction par utilisation de la règle 3 (expression)
+
+    expression  aller à l'état 25
+    commande    aller à l'état 6
+
+
+État 14
+
+    8 expression: expression '|' . expression
+
+    IDENTIFICATEUR  décalage et aller à l'état 2
+    '('             décalage et aller à l'état 3
+
+    $défaut  réduction par utilisation de la règle 3 (expression)
+
+    expression  aller à l'état 26
+    commande    aller à l'état 6
+
+
+État 15
+
+    9 expression: expression IN . fichier
+
+    IDENTIFICATEUR  décalage et aller à l'état 27
+
+    fichier  aller à l'état 28
+
+
+État 16
+
+   10 expression: expression OUT . fichier
+
+    IDENTIFICATEUR  décalage et aller à l'état 27
+
+    fichier  aller à l'état 29
+
+
+État 17
+
+   13 expression: expression OUT_APPEND . fichier
+
+    IDENTIFICATEUR  décalage et aller à l'état 27
+
+    fichier  aller à l'état 30
+
+
+État 18
+
+   11 expression: expression ERR . fichier
+
+    IDENTIFICATEUR  décalage et aller à l'état 27
+
+    fichier  aller à l'état 31
+
+
+État 19
+
+   12 expression: expression ERR_OUT . fichier
+
+    IDENTIFICATEUR  décalage et aller à l'état 27
+
+    fichier  aller à l'état 32
+
+
+État 20
+
+    1 lignecommande: expression '\n' .
+
+    $défaut  réduction par utilisation de la règle 1 (lignecommande)
+
+
+État 21
+
+   18 commande: commande IDENTIFICATEUR .
+
+    $défaut  réduction par utilisation de la règle 18 (commande)
+
+
+État 22
+
+   15 expression: '(' expression ')' .
+
+    $défaut  réduction par utilisation de la règle 15 (expression)
+
+
+État 23
+
+    5 expression: expression . ';' expression
+    5           | expression ';' expression .
+    6           | expression . ET expression
+    7           | expression . OU expression
+    8           | expression . '|' expression
+    9           | expression . IN fichier
+   10           | expression . OUT fichier
+   11           | expression . ERR fichier
+   12           | expression . ERR_OUT fichier
+   13           | expression . OUT_APPEND fichier
+   14           | expression . '&'
+
+    '|'         décalage et aller à l'état 14
+    IN          décalage et aller à l'état 15
+    OUT         décalage et aller à l'état 16
+    OUT_APPEND  décalage et aller à l'état 17
+    ERR         décalage et aller à l'état 18
+    ERR_OUT     décalage et aller à l'état 19
+
+    IN          [réduction par utilisation de la règle 5 (expression)]
+    OUT         [réduction par utilisation de la règle 5 (expression)]
+    OUT_APPEND  [réduction par utilisation de la règle 5 (expression)]
+    ERR         [réduction par utilisation de la règle 5 (expression)]
+    ERR_OUT     [réduction par utilisation de la règle 5 (expression)]
+    $défaut    réduction par utilisation de la règle 5 (expression)
+
+
+État 24
+
+    5 expression: expression . ';' expression
+    6           | expression . ET expression
+    6           | expression ET expression .
+    7           | expression . OU expression
+    8           | expression . '|' expression
+    9           | expression . IN fichier
+   10           | expression . OUT fichier
+   11           | expression . ERR fichier
+   12           | expression . ERR_OUT fichier
+   13           | expression . OUT_APPEND fichier
+   14           | expression . '&'
+
+    '|'         décalage et aller à l'état 14
+    IN          décalage et aller à l'état 15
+    OUT         décalage et aller à l'état 16
+    OUT_APPEND  décalage et aller à l'état 17
+    ERR         décalage et aller à l'état 18
+    ERR_OUT     décalage et aller à l'état 19
+
+    IN          [réduction par utilisation de la règle 6 (expression)]
+    OUT         [réduction par utilisation de la règle 6 (expression)]
+    OUT_APPEND  [réduction par utilisation de la règle 6 (expression)]
+    ERR         [réduction par utilisation de la règle 6 (expression)]
+    ERR_OUT     [réduction par utilisation de la règle 6 (expression)]
+    $défaut    réduction par utilisation de la règle 6 (expression)
+
+
+État 25
+
+    5 expression: expression . ';' expression
+    6           | expression . ET expression
+    7           | expression . OU expression
+    7           | expression OU expression .
+    8           | expression . '|' expression
+    9           | expression . IN fichier
+   10           | expression . OUT fichier
+   11           | expression . ERR fichier
+   12           | expression . ERR_OUT fichier
+   13           | expression . OUT_APPEND fichier
+   14           | expression . '&'
+
+    '|'         décalage et aller à l'état 14
+    IN          décalage et aller à l'état 15
+    OUT         décalage et aller à l'état 16
+    OUT_APPEND  décalage et aller à l'état 17
+    ERR         décalage et aller à l'état 18
+    ERR_OUT     décalage et aller à l'état 19
+
+    IN          [réduction par utilisation de la règle 7 (expression)]
+    OUT         [réduction par utilisation de la règle 7 (expression)]
+    OUT_APPEND  [réduction par utilisation de la règle 7 (expression)]
+    ERR         [réduction par utilisation de la règle 7 (expression)]
+    ERR_OUT     [réduction par utilisation de la règle 7 (expression)]
+    $défaut    réduction par utilisation de la règle 7 (expression)
+
+
+État 26
+
+    5 expression: expression . ';' expression
+    6           | expression . ET expression
+    7           | expression . OU expression
+    8           | expression . '|' expression
+    8           | expression '|' expression .
+    9           | expression . IN fichier
+   10           | expression . OUT fichier
+   11           | expression . ERR fichier
+   12           | expression . ERR_OUT fichier
+   13           | expression . OUT_APPEND fichier
+   14           | expression . '&'
+
+    IN          décalage et aller à l'état 15
+    OUT         décalage et aller à l'état 16
+    OUT_APPEND  décalage et aller à l'état 17
+    ERR         décalage et aller à l'état 18
+    ERR_OUT     décalage et aller à l'état 19
+
+    IN          [réduction par utilisation de la règle 8 (expression)]
+    OUT         [réduction par utilisation de la règle 8 (expression)]
+    OUT_APPEND  [réduction par utilisation de la règle 8 (expression)]
+    ERR         [réduction par utilisation de la règle 8 (expression)]
+    ERR_OUT     [réduction par utilisation de la règle 8 (expression)]
+    $défaut    réduction par utilisation de la règle 8 (expression)
+
+
+État 27
+
+   16 fichier: IDENTIFICATEUR .
+
+    $défaut  réduction par utilisation de la règle 16 (fichier)
+
+
+État 28
+
+    9 expression: expression IN fichier .
+
+    $défaut  réduction par utilisation de la règle 9 (expression)
+
+
+État 29
+
+   10 expression: expression OUT fichier .
+
+    $défaut  réduction par utilisation de la règle 10 (expression)
+
+
+État 30
+
+   13 expression: expression OUT_APPEND fichier .
+
+    $défaut  réduction par utilisation de la règle 13 (expression)
+
+
+État 31
+
+   11 expression: expression ERR fichier .
+
+    $défaut  réduction par utilisation de la règle 11 (expression)
+
+
+État 32
+
+   12 expression: expression ERR_OUT fichier .
+
+    $défaut  réduction par utilisation de la règle 12 (expression)

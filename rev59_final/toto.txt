@@ -1,0 +1,53 @@
+==6448== 
+==6448== HEAP SUMMARY:
+==6448==     in use at exit: 93,342 bytes in 61 blocks
+==6448==   total heap usage: 236 allocs, 175 frees, 179,003 bytes allocated
+==6448== 
+==6448== 120 bytes in 1 blocks are definitely lost in loss record 6 of 15
+==6448==    at 0x40299D8: malloc (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==6448==    by 0x40F6183: getdelim (iogetdelim.c:67)
+==6448==    by 0x804C298: initHistory (History.c:44)
+==6448==    by 0x804ADF3: initCommands (Commands.c:111)
+==6448==    by 0x8049F11: main (Shell.c:168)
+==6448== 
+==6448== 240 bytes in 2 blocks are definitely lost in loss record 8 of 15
+==6448==    at 0x40299D8: malloc (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==6448==    by 0x40F6183: getdelim (iogetdelim.c:67)
+==6448==    by 0x804CC5A: addCommandLineFromHistory (CommandLine.c:138)
+==6448==    by 0x804CE97: getCommandLine (CommandLine.c:200)
+==6448==    by 0x8049FAA: main (Shell.c:183)
+==6448== 
+==6448== 256 bytes in 1 blocks are definitely lost in loss record 9 of 15
+==6448==    at 0x40299D8: malloc (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==6448==    by 0x804B063: externalCommandExists (Commands.c:182)
+==6448==    by 0x804A41A: executeExpression (Shell.c:335)
+==6448==    by 0x804A0D5: prepareExpression (Shell.c:257)
+==6448==    by 0x8049FD2: main (Shell.c:228)
+==6448== 
+==6448== 360 bytes in 3 blocks are definitely lost in loss record 10 of 15
+==6448==    at 0x40299D8: malloc (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==6448==    by 0x40F6183: getdelim (iogetdelim.c:67)
+==6448==    by 0x804CC38: addCommandLineFromHistory (CommandLine.c:136)
+==6448==    by 0x804CE7E: getCommandLine (CommandLine.c:197)
+==6448==    by 0x8049FAA: main (Shell.c:183)
+==6448== 
+==6448== 2,136 (48 direct, 2,088 indirect) bytes in 3 blocks are definitely lost in loss record 12 of 15
+==6448==    at 0x40299D8: malloc (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==6448==    by 0x8049BFB: ConstruireNoeud (Shell.c:35)
+==6448==    by 0x804E28E: yyparse (Analyse.y:62)
+==6448==    by 0x804B9B4: cmdSource (Commands.c:574)
+==6448==    by 0x804A3F2: executeExpression (Shell.c:330)
+==6448==    by 0x804A0D5: prepareExpression (Shell.c:257)
+==6448==    by 0x8049FD2: main (Shell.c:228)
+==6448== 
+==6448== LEAK SUMMARY:
+==6448==    definitely lost: 1,024 bytes in 10 blocks
+==6448==    indirectly lost: 2,088 bytes in 33 blocks
+==6448==      possibly lost: 0 bytes in 0 blocks
+==6448==    still reachable: 90,230 bytes in 18 blocks
+==6448==         suppressed: 0 bytes in 0 blocks
+==6448== Reachable blocks (those to which a pointer was found) are not shown.
+==6448== To see them, rerun with: --leak-check=full --show-reachable=yes
+==6448== 
+==6448== For counts of detected and suppressed errors, rerun with: -v
+==6448== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)

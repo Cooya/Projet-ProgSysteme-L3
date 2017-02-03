@@ -1,0 +1,39 @@
+LEX 	= lex
+YACC 	= yacc -d -v
+CC	= gcc -std=c99 -g -Wall #-D_POSIX_SOURCE
+LIBS	= -lfl -lm
+#LIBS    = -ll -lm #pour Mac
+Shell: job.o Shell.o Commands.o EnvVars.o Aliases.o History.o Times.o CommandLine.o extlib.dll.o extlib.def.o y.tab.o lex.yy.o
+	$(CC) -o Shell job.o Shell.o Commands.o EnvVars.o Aliases.o History.o Times.o CommandLine.o extlib.dll.o extlib.def.o y.tab.o lex.yy.o $(LIBS)
+
+job.o : job.c job.h
+
+Shell.o: Shell.c Shell.h Commands.h EnvVars.h job.h Aliases.h History.h Times.h CommandLine.h
+
+Commands.o: Commands.c Commands.h EnvVars.h Aliases.h History.h Shell.h extlib.dll.h job.h y.tab.h
+
+EnvVars.o: EnvVars.c EnvVars.h
+
+Aliases.o: Aliases.c Aliases.h extlib.dll.h
+
+History.o: History.c History.h extlib.dll.h
+
+Times.o: Times.c Times.h extlib.dll.h
+
+CommandLine.o: CommandLine.c CommandLine.h History.h
+
+extlib.def.o: extlib.def.c extlib.def.h
+
+extlib.dll.o: extlib.dll.c extlib.def.h extlib.dll.h extlib.dll.more.h
+
+lex.yy.o: lex.yy.c y.tab.h Shell.h
+
+y.tab.c y.tab.h: Analyse.y
+	$(YACC) Analyse.y
+
+lex.yy.c: Analyse.l Shell.h y.tab.h
+	$(LEX) Analyse.l
+
+.PHONY: clean
+clean:
+	rm -f Shell *~ *.o y.tab.* y.output lex.yy.*
